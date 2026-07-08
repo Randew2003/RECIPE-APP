@@ -3,9 +3,14 @@ import { ENV } from "./config/env.js";
 import { db } from "./config/db.js";
 import { favoritesTable } from "./db/schema.js";
 import { and, eq } from "drizzle-orm";
+import {job} from "./config/cron.js";   
+
+  
 
 const app = express();
 const PORT = ENV.PORT || 5001
+
+if(ENV.NODE_ENV === "production") job.start(); // meken thana cron job eka start krnne. if the enviroment is production then only the cron job will start. because we want to send the GET request only when the app is deployed on Render.
 
 app.use(express.json());    // meka evilla middleware ekak, request body eka JSON format ekata parse karanna use karanawa. request Body data catch kr gnn nm Must me middleware eka dan one.
 
